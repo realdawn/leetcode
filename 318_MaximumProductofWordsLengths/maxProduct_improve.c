@@ -19,6 +19,8 @@ int maxProduct(char** words, int wordsSize) {
                                		 maxproduct = wordlengths[i] * wordlengths[j];
                 }
         }
+	free(mask);
+	free(wordlengths);
         return maxproduct;
 }
 
