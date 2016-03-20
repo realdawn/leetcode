@@ -1,4 +1,3 @@
-#include<stdlib.h>
 /**
  * Return an array of arrays of size *returnSize.
  * Note: The returned array must be malloced, assume caller calls free().
@@ -9,16 +8,11 @@ char*** solveNQueens(int n, int* returnSize) {
 	int *oneSolution;
 	int solutionCount = 0;    
 	char ***allSolution;
-	allSolution = (char ***)malloc (1000 * sizeof(char**));
+	allSolution = (char ***)malloc (5000 * sizeof(char**));
 	oneSolution = (int *)malloc(n * sizeof(int));
-	flag = (int **) malloc(n * sizeof(int *));
+	flag = (int **) calloc(n, sizeof(int *));
 	for (i = 0; i < n; i++) {
-		flag[i] =(int *)malloc(n * sizeof(int));
-	}
-	for (i = 0; i < n; i++) {
-		for (j = 0; j < n; j++) {
-			flag[i][j] = 0;		
-		}
+		flag[i] =(int *)calloc(n, sizeof(int));
 	}
 	i = 0; j = 0;
 	while (i >= 0) {
@@ -62,12 +56,13 @@ char*** solveNQueens(int n, int* returnSize) {
 			char **solution;
 			solution = (char **)malloc(n * sizeof(char *));
 			for (p = 0; p < n; p++)	{
-				solution[p] = (char *)malloc(n * sizeof(char));
+				solution[p] = (char *)malloc((n+1) * sizeof(char));
 			}
 			for (p = 0; p < n; p++)	{
 				for (q = 0; q < n; q++) {
 					solution[p][q] = '.';
 				}
+				solution[p][q] = '\0';
 			} 
 			for (p = 0; p < n; p++)	{
 				solution[p][oneSolution[p]] = 'Q';
@@ -92,13 +87,8 @@ char*** solveNQueens(int n, int* returnSize) {
 	for (i = 0; i < n; i++)	{
 		free(flag[i]);
 	}
-        free(flag);
+	free(flag);
 	*returnSize = solutionCount;
 	return allSolution;
 }
-int main()
-{
-	int *returnSize = (int *)malloc(sizeof(int));	
-	char ***allSolution;
-	allSolution = solveNQueens(5,returnSize);
-}
+
